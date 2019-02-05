@@ -15,13 +15,13 @@ import (
 	"time"
 
 	"github.com/akavel/rsrc/rsrc"
-	"github.com/asticode/go-astilectron"
-	"github.com/asticode/go-astilog"
+	astilectron "github.com/asticode/go-astilectron"
+	astilog "github.com/asticode/go-astilog"
 	astiarchive "github.com/asticode/go-astitools/archive"
 	astios "github.com/asticode/go-astitools/os"
-	"github.com/asticode/go-bindata"
+	bindata "github.com/asticode/go-bindata"
 	"github.com/pkg/errors"
-	"github.com/sam-kamerer/go-plister"
+	plister "github.com/sam-kamerer/go-plister"
 )
 
 // Configuration represents the bundle configuration
@@ -465,7 +465,7 @@ func (b *Bundler) BindData(os, arch string) (err error) {
 	}
 
 	// Adapt resources
-	if err = b.adaptResources(); err != nil {
+	if err = b.adaptResources(os, arch); err != nil {
 		err = errors.Wrap(err, "adapting resources failed")
 		return
 	}
@@ -476,7 +476,7 @@ func (b *Bundler) BindData(os, arch string) (err error) {
 	c.Output = filepath.Join(b.pathBindOutput, fmt.Sprintf("bind_%s_%s.go", os, arch))
 	c.Package = b.bindPackage
 	c.Prefix = b.pathBindInput
-	c.Tags = fmt.Sprintf("%s,%s", os, arch)
+	c.Tags = fmt.Sprintf("%s,%s,!dev", os, arch)
 
 	// Bind data
 	astilog.Debugf("Generating %s", c.Output)
@@ -573,7 +573,7 @@ func (b *Bundler) provisionVendorElectron(oS, arch string) error {
 		filepath.Join(b.pathVendor, zipNameElectron))
 }
 
-func (b *Bundler) adaptResources() (err error) {
+func (b *Bundler) adaptResources(bundleOS, arch string) (err error) {
 	// Create dir
 	var o = filepath.Join(b.pathBindInput, b.pathResources)
 	astilog.Debugf("Creating %s", o)
@@ -603,6 +603,7 @@ func (b *Bundler) adaptResources() (err error) {
 		if a.Dir != "" {
 			cmd.Dir = filepath.Join(o, a.Dir)
 		}
+		cmd.Env = append(cmd.Env, fmt.Sprintf("BundleOS=%s", bundleOS), fmt.Sprintf("BundleArch=%s", arch))
 
 		// Run
 		astilog.Debugf("Running %s in directory %s", strings.Join(cmd.Args, " "), cmd.Dir)
