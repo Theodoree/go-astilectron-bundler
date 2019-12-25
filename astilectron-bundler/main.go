@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	astibundler "github.com/asticode/go-astilectron-bundler"
+	astibundler "github.com/antmanler/go-astilectron-bundler"
 	"github.com/asticode/go-astilog"
 	astiflag "github.com/asticode/go-astitools/flag"
 	"github.com/pkg/errors"
