@@ -399,7 +399,7 @@ func (b *Bundler) bundle(e ConfigurationEnvironment) (err error) {
 	// Build cmd
 	b.l.Debugf("Building for os %s and arch %s astilectron: %s electron: %s", e.OS, e.Arch, b.versionAstilectron, b.versionElectron)
 	var binaryPath = filepath.Join(environmentPath, "binary")
-	var cmd = exec.Command(b.pathGoBinary, "build", "-ldflags", std.String(), "-o", binaryPath, b.pathBuild)
+	var cmd = exec.Command(b.pathGoBinary, "build", "-trimpath", "-ldflags", std.String(), "-o", binaryPath, b.pathBuild)
 	cmd.Env = os.Environ()
 	cmd.Env = append(cmd.Env,
 		"GOARCH="+e.Arch,
