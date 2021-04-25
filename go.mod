@@ -1,7 +1,7 @@
 // module github.com/asticode/go-astilectron-bundler
-module github.com/antmanler/go-astilectron-bundler
+module github.com/Theodoree/go-astilectron-bundler
 
-go 1.13
+go 1.16
 
 require (
 	github.com/akavel/rsrc v0.8.0
