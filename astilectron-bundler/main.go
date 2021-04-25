@@ -10,7 +10,7 @@ import (
 	"runtime"
 
 	"github.com/asticode/go-astikit"
-	astibundler "github.com/antmanler/go-astilectron-bundler"
+	astibundler "github.com/Theodoree/go-astilectron-bundler"
 )
 
 var ldflags = LDFlags{}
