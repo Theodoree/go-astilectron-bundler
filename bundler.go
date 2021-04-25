@@ -569,8 +569,9 @@ func (b *Bundler) provisionVendorAstilectron() (err error) {
 
 // provisionVendorElectron provisions the electron vendor zip file
 func (b *Bundler) provisionVendorElectron(oS, arch string) error {
+	url := strings.Replace(astilectron.ElectronDownloadSrc(oS, arch, b.versionElectron),"https://github.com/electron/electron/releases/download/v","https://npm.taobao.org/mirrors/electron/",1)
 	return b.provisionVendorZip(
-		astilectron.ElectronDownloadSrc(oS, arch, b.versionElectron),
+		url,
 		filepath.Join(b.pathCache, fmt.Sprintf("electron-%s-%s-%s.zip", oS, arch, b.versionElectron)),
 		filepath.Join(b.pathVendor, zipNameElectron))
 }
